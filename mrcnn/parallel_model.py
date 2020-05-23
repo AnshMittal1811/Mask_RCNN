@@ -18,20 +18,20 @@ import keras.backend as K
 import keras.layers as KL
 import keras.models as KM
 
-
+    
 class ParallelModel(KM.Model):
     """Subclasses the standard Keras Model and adds multi-GPU support.
     It works by creating a copy of the model on each GPU. Then it slices
     the inputs and sends a slice to each copy of the model, and then
     merges the outputs together and applies the loss on the combined
     outputs.
-    """
-
+    """	
     def __init__(self, keras_model, gpu_count):
         """Class constructor.
         keras_model: The Keras model to parallelize
         gpu_count: Number of GPUs. Must be > 1
         """
+        super(ParallelModel, self).__init__()
         self.inner_model = keras_model
         self.gpu_count = gpu_count
         merged_outputs = self.make_parallel()
